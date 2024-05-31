@@ -1,11 +1,10 @@
 <?php
 
 namespace MyApp\models\attributeModel;
-require_once './models/attributeModel/Attribute.php';
 
 use MyApp\models\attributeModel\Attribute;
 
-class WithUSB3Ports extends Attribute {
+class WithUSB3ports extends Attribute {
 
     const TYPE = 'With USB 3 ports';
 
@@ -24,3 +23,4 @@ class WithUSB3Ports extends Attribute {
 }
 
 ?>
+

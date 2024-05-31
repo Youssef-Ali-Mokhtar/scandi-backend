@@ -2,10 +2,6 @@
 
 namespace MyApp\models\productModel;
 
-require_once './factories/AttributeFactory.php';
-require_once './models/productModel/Product.php';
-require_once './factories/AttributeFactory.php';
-
 use MyApp\models\productModel\Tech;
 use MyApp\factories\AttributeFactory;
 

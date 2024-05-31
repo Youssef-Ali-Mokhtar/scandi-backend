@@ -2,11 +2,6 @@
 
 namespace MyApp\controllers;
 
-
-include_once './database/Database.php';
-include_once './repositories/ProductRepository.php';
-include_once './services/ProductService.php';
-
 use MyApp\database\Database;
 use MyApp\repositories\ProductRepository;
 use MyApp\services\ProductService;
