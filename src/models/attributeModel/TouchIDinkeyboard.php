@@ -1,13 +1,12 @@
 <?php
 
 namespace MyApp\models\attributeModel;
-require_once './models/attributeModel/Attribute.php';
 
 use MyApp\models\attributeModel\Attribute;
 
-class Color extends Attribute {
+class TouchIDinkeyboard extends Attribute {
 
-    const TYPE = 'Color';
+    const TYPE = 'Touch ID in keyboard';
 
     public function __construct($data) {
         parent::__construct($data);

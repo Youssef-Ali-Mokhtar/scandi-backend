@@ -1,13 +1,12 @@
 <?php
 
 namespace MyApp\models\attributeModel;
-require_once './models/attributeModel/Attribute.php';
 
 use MyApp\models\attributeModel\Attribute;
 
-class Size extends Attribute {
+class Capacity extends Attribute {
 
-    const TYPE = 'Size';
+    const TYPE = 'Capacity';
 
     public function __construct($data) {
         parent::__construct($data);
