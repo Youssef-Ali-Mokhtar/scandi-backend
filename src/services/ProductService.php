@@ -18,7 +18,8 @@ class ProductService {
     public function getAllProducts() {
         $productsData = $this->productRepository->fetchAll();
         //DO I NEED A FACTORY METHOD HERE?
-        return $productsData;
+        $products = ParseProduct::convertInStockToBool($productsData);
+        return $products;
     }
 
     //GET ONE PRODUCT BY ID IN ONE QUERY
@@ -41,8 +42,8 @@ class ProductService {
 
     public function getProductByCategory($category) {
         $productsData = $this->productRepository->fetchByCategory($category);
-
-        return $productsData;
+        $products = ParseProduct::convertInStockToBool($productsData);
+        return $products;
     }
 }
 ?>

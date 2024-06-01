@@ -13,40 +13,24 @@ class ProductRepository {
 
     //One query, only Product table, no join with attribute
     public function fetchAll() {
-        $query = "SELECT * FROM product;";
+        $query = "SELECT * FROM product";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // One query, get product by id, join with attribute table
+    //One query, get product by id, join with attribute table
     public function fetchById($id) {
         $query = "
-        SELECT p.id AS productId, p.name AS productName, p.inStock, p.category, p.brand, 
-        a.id AS attributeId, a.name AS attributeName, a.type, ai.id AS itemId, ai.value,
-        ai.displayValue
-        FROM product AS p
-        LEFT JOIN product_attribute AS pa 
-        ON p.id = pa.productId 
-        LEFT JOIN attribute AS a
-        ON pa.attributeId = a.id 
-        LEFT JOIN product_attribute_item AS pai
-        ON pa.id = pai.productAttributeId 
-        LEFT JOIN ( 
-            SELECT id, value, displayValue, 'Size' as type FROM size 
-            UNION ALL 
-            SELECT id, value, displayValue, 'Color' as type FROM color 
-            UNION ALL 
-            SELECT id, value, displayValue, 'Capacity' as type FROM capacity 
-            UNION ALL 
-            SELECT id, value, displayValue, 'With USB 3 ports' as type 
-            FROM with_usb_3_ports 
-            UNION ALL 
-            SELECT id, value, displayValue, 'Touch ID in keyboard' as type FROM touch_id_in_keyboard 
-        ) AS ai 
-        ON pai.itemId = ai.id
-        AND pai.attributeType = ai.type
-        WHERE p.id = :id;
+        SELECT p.id AS productId, p.name AS productName, p.inStock, p.category, p.brand, a.id AS attributeId, a.name AS attributeName, a.type, i.id AS itemId, i.value, i.displayValue
+        FROM product_attribute_item AS pai
+        RIGHT JOIN product AS p
+        ON p.id = pai.productId
+        JOIN attribute AS a
+        ON a.id = pai.attributeId
+        JOIN item AS i
+        ON i.id = pai.itemId
+        WHERE p.id = :id
         ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
@@ -55,19 +39,11 @@ class ProductRepository {
     }
 
     public function fetchByCategory($category) {
-        $query = "SELECT * FROM product WHERE category = ?";
+        $query = "SELECT * FROM product WHERE category = :category";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $category);
+        $stmt->bindParam(':category', $category, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    // public function fetchAttributesByProductId($productId) {
-    //     $query = "SELECT * FROM attributes WHERE product_id = ?";
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(1, $productId, PDO::PARAM_INT);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
 }
 ?>

@@ -21,21 +21,14 @@ if ($requestMethod == 'GET') {
     if ($requestPath === '/scandi/products') {
         if (isset($_GET['category'])) {
             $category = $_GET['category'];
-            $products = $productController->getByCategory($category);
-            echo json_encode($products);
+            $productController->getByCategory($category);
         } else {
-            $products = $productController->getAll();
-            echo json_encode($products);
+            $productController->getAll();
         }
     } elseif (preg_match('/^\/scandi\/products\/([^\/]+)$/', $requestPath, $matches)) {
         $productId = $matches[1];
-        $product = $productController->getById($productId);
-        if ($product) {
-            echo json_encode($product);
-        } else {
-            http_response_code(404); // Not Found
-            echo json_encode(['error' => 'Product not found']);
-        }
+        $productController->getById($productId);
+
     } else {
         http_response_code(404); // Not Found
         echo json_encode(['error' => 'Endpoint not found']);

@@ -4,6 +4,16 @@
 
     class ParseProduct {
 
+        static function convertInStockToBool($products) {
+
+            $transformedData = array_map(function($product) {
+                $product['inStock'] = (bool) $product['inStock'];
+                return $product;
+            }, $products);
+
+            return $transformedData;
+        }
+
         static function extractProduct($data) {
             $product = [
                 'id' => $data[0]['productId'],
